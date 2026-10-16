@@ -1,0 +1,352 @@
+
+/* =========================================
+   GHOSTVAMP3000 WEATHER
+   Cozy Weather Experience
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+    --background: #0b1220;
+    --surface: #131e30;
+    --surface-light: #1a2940;
+    --text: #f1f6ff;
+    --muted: #9eafc8;
+    --blue: #a5d8ff;
+    --mint: #b7f3dc;
+    --border: rgba(219, 235, 255, 0.10);
+    --radius: 28px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(ellipse at 15% 10%, rgba(79, 128, 191, 0.16), transparent 40%),
+        radial-gradient(ellipse at 85% 50%, rgba(92, 166, 153, 0.09), transparent 38%),
+        var(--background);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* NAVIGATION */
+
+.navbar {
+    width: min(1160px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 28px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.logo {
+    font-family: 'Nunito', sans-serif;
+    color: var(--text);
+    font-size: 19px;
+    font-weight: 900;
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+
+.weather-label {
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+/* MAIN CONTENT */
+
+#app {
+    width: min(1000px, calc(100% - 48px));
+    margin: 0 auto;
+}
+
+.welcome {
+    padding: 55px 0 34px;
+    animation: fade-up 0.8s ease both;
+}
+
+.eyebrow {
+    color: var(--mint);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 18px;
+}
+
+.welcome h1 {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(44px, 7vw, 76px);
+    font-weight: 900;
+    line-height: 1.06;
+    letter-spacing: -3px;
+    background: linear-gradient(120deg, #ffffff 10%, #c5e3ff 55%, #b7f3dc 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.subtitle {
+    margin-top: 20px;
+    color: var(--muted);
+    font-size: 15px;
+}
+
+/* MAIN WEATHER CARD */
+
+.weather-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 42px;
+    min-height: 330px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background:
+        radial-gradient(ellipse at 85% 5%, rgba(170, 222, 255, 0.16), transparent 42%),
+        radial-gradient(ellipse at 75% 100%, rgba(137, 219, 191, 0.12), transparent 45%),
+        linear-gradient(135deg, #182941, #111c2e 75%);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.18);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    animation: fade-up 0.9s ease both;
+}
+
+.weather-card::before {
+    content: "";
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    right: 13%;
+    top: 25px;
+    background: rgba(178, 221, 255, 0.07);
+    filter: blur(5px);
+    z-index: -1;
+}
+
+.weather-info {
+    position: relative;
+    z-index: 2;
+}
+
+#location {
+    color: var(--blue);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+#temperature {
+    margin: 4px 0 0 -7px;
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(78px, 11vw, 112px);
+    font-weight: 800;
+    letter-spacing: -7px;
+    line-height: 1.2;
+}
+
+#condition {
+    color: #d2e0f2;
+    font-size: 16px;
+}
+
+.frog {
+    position: absolute;
+    right: 9%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: clamp(80px, 13vw, 135px);
+    filter: drop-shadow(0 15px 22px rgba(0, 0, 0, 0.25));
+    animation: frog-float 4s ease-in-out infinite;
+    user-select: none;
+}
+
+.weather-note {
+    width: fit-content;
+    max-width: 100%;
+    margin-top: 26px;
+    padding: 10px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 50px;
+    color: #c1d3e8;
+    background: rgba(8, 18, 32, 0.28);
+    font-size: 12px;
+}
+
+/* FORECAST SECTION */
+
+.forecast-section {
+    padding: 45px 0 65px;
+    animation: fade-up 1s ease both;
+}
+
+.forecast-section h2 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 20px;
+}
+
+.forecast-placeholder {
+    padding: 28px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: rgba(19, 30, 48, 0.72);
+    color: var(--muted);
+    text-align: center;
+    font-size: 14px;
+}
+
+/* FOOTER */
+
+footer {
+    padding: 25px 24px 35px;
+    border-top: 1px solid var(--border);
+    color: #7e90aa;
+    text-align: center;
+    font-size: 12px;
+}
+
+footer p + p {
+    margin-top: 4px;
+    font-size: 10px;
+    opacity: 0.75;
+}
+
+/* ANIMATIONS */
+
+@keyframes frog-float {
+    0%, 100% {
+        transform: translateY(-50%);
+    }
+
+    50% {
+        transform: translateY(calc(-50% - 12px));
+    }
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* TABLETS AND MOBILE */
+
+@media (max-width: 650px) {
+    .navbar {
+        width: calc(100% - 32px);
+        padding: 21px 0;
+    }
+
+    .logo {
+        font-size: 16px;
+    }
+
+    .weather-label {
+        max-width: 120px;
+        text-align: right;
+        font-size: 8px;
+        letter-spacing: 1px;
+    }
+
+    #app {
+        width: calc(100% - 32px);
+    }
+
+    .welcome {
+        padding: 48px 0 28px;
+    }
+
+    .welcome h1 {
+        letter-spacing: -2px;
+    }
+
+    .subtitle {
+        font-size: 13px;
+    }
+
+    .weather-card {
+        min-height: 360px;
+        padding: 28px 24px;
+        justify-content: flex-start;
+    }
+
+    #temperature {
+        font-size: 82px;
+    }
+
+    .frog {
+        right: 23px;
+        top: auto;
+        bottom: 58px;
+        font-size: 85px;
+        transform: none;
+    }
+
+    .weather-note {
+        margin-top: auto;
+        position: relative;
+        z-index: 2;
+        font-size: 10px;
+        padding: 9px 12px;
+    }
+
+    .forecast-section {
+        padding: 35px 0 45px;
+    }
+
+    .forecast-section h2 {
+        font-size: 21px;
+    }
+}
+
+@media (max-width: 360px) {
+    .weather-card {
+        padding: 23px 18px;
+    }
+
+    .frog {
+        font-size: 70px;
+        right: 14px;
+    }
+
+    .weather-note {
+        max-width: 90%;
+    }
+}
