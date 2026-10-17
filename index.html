@@ -1,1 +1,820 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101827">
+    <meta name="description" content="Atmos — a beautiful, immersive weather experience with live conditions and forecasts.">
+
+    <title>Atmos — Weather, at a glance</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Accessible SVG icon library: no emoji icons required -->
+    <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <symbol id="icon-atmos" viewBox="0 0 48 48">
+            <path d="M9 30.5a10 10 0 0 1 2-19.8A14 14 0 0 1 37.5 16 8 8 0 0 1 37 32H12"
+                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="m18 39 5-5 5 5" fill="none" stroke="currentColor"
+                  stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+
+        <symbol id="icon-search" viewBox="0 0 24 24">
+            <circle cx="10.8" cy="10.8" r="6.8" fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <path d="m16 16 4.2 4.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </symbol>
+
+        <symbol id="icon-location" viewBox="0 0 24 24">
+            <path d="M20 10c0 5.5-8 11.5-8 11.5S4 15.5 4 10a8 8 0 1 1 16 0Z"
+                  fill="none" stroke="currentColor" stroke-width="1.7"/>
+            <circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/>
+        </symbol>
+
+        <symbol id="icon-settings" viewBox="0 0 24 24">
+            <path d="M12 8.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4Z"
+                  fill="none" stroke="currentColor" stroke-width="1.7"/>
+            <path d="m19.3 13.8 1.1 1.7-2 3.4-2-.3a7.8 7.8 0 0 1-1.8 1l-.9 1.7H10l-.9-1.7a7.8 7.8 0 0 1-1.8-1l-2 .3-2-3.4 1.1-1.7a7 7 0 0 1 0-2L3.3 10l2-3.4 2 .3a7.8 7.8 0 0 1 1.8-1L10 4.2h3.8l.9 1.7a7.8 7.8 0 0 1 1.8 1l2-.3 2 3.4-1.1 1.8a7 7 0 0 1-.1 2Z"
+                  transform="translate(0 -1)" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        </symbol>
+
+        <symbol id="icon-refresh" viewBox="0 0 24 24">
+            <path d="M20 7v5h-5M4 17v-5h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 9a7 7 0 0 1 12-2l2 5M4 12l2 5a7 7 0 0 0 12-2"
+                  fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </symbol>
+
+        <symbol id="icon-star" viewBox="0 0 24 24">
+            <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"
+                  fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+        </symbol>
+
+        <symbol id="icon-chevron" viewBox="0 0 24 24">
+            <path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+
+        <symbol id="icon-close" viewBox="0 0 24 24">
+            <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </symbol>
+
+        <symbol id="icon-thermometer" viewBox="0 0 24 24">
+            <path d="M14 14.8V5a3 3 0 0 0-6 0v9.8a5 5 0 1 0 6 0Z"
+                  fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            <path d="M11 11v7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </symbol>
+
+        <symbol id="icon-humidity" viewBox="0 0 24 24">
+            <path d="M12 2.8S5.5 10 5.5 14.4a6.5 6.5 0 0 0 13 0C18.5 10 12 2.8 12 2.8Z"
+                  fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            <path d="M9 15.5a3 3 0 0 0 3 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </symbol>
+
+        <symbol id="icon-wind" viewBox="0 0 24 24">
+            <path d="M3 8h12a3 3 0 1 0-3-3M2 12h17a2.5 2.5 0 1 1-2.5 2.5M4 16h7a2.5 2.5 0 1 1-2.5 2.5"
+                  fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </symbol>
+
+        <symbol id="icon-eye" viewBox="0 0 24 24">
+            <path d="M2.5 12s3.3-6 9.5-6 9.5 6 9.5 6-3.3 6-9.5 6-9.5-6-9.5-6Z"
+                  fill="none" stroke="currentColor" stroke-width="1.7"/>
+            <circle cx="12" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="1.7"/>
+        </symbol>
+
+        <symbol id="icon-gauge" viewBox="0 0 24 24">
+            <path d="M4 19a9 9 0 1 1 16 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            <path d="m12 13 4-4M7 19h10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            <circle cx="12" cy="13" r="1.5" fill="currentColor"/>
+        </symbol>
+
+        <symbol id="icon-sunrise" viewBox="0 0 24 24">
+            <path d="M3 18h18M5 21h14M4 14h16M12 3v8m-4-4 4-4 4 4M6 11a6 6 0 0 1 12 0"
+                  fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+
+        <symbol id="icon-sunset" viewBox="0 0 24 24">
+            <path d="M3 18h18M5 21h14M4 14h16M12 3v8m-4 0 4 4 4-4M6 11a6 6 0 0 1 12 0"
+                  fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+
+        <symbol id="icon-sun" viewBox="0 0 64 64">
+            <circle cx="32" cy="32" r="12" fill="currentColor"/>
+            <g stroke="currentColor" stroke-width="3" stroke-linecap="round">
+                <path d="M32 5v7M32 52v7M5 32h7M52 32h7M13 13l5 5M46 46l5 5M51 13l-5 5M18 46l-5 5"/>
+            </g>
+        </symbol>
+
+        <symbol id="icon-moon" viewBox="0 0 64 64">
+            <path d="M43 8a24 24 0 1 0 13 42A25 25 0 0 1 43 8Z" fill="currentColor"/>
+        </symbol>
+
+        <symbol id="icon-cloud" viewBox="0 0 64 64">
+            <path d="M16 47a12 12 0 0 1 0-24 18 18 0 0 1 34-2 13 13 0 0 1 1 26H16Z"
+                  fill="currentColor"/>
+        </symbol>
+
+        <symbol id="icon-cloud-sun" viewBox="0 0 64 64">
+            <g fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round">
+                <path d="M37 9V4M50 14l4-4M24 14l-4-4M54 27h5"/>
+            </g>
+            <circle cx="37" cy="22" r="11" fill="currentColor"/>
+            <path d="M15 49a11 11 0 0 1 0-22 16 16 0 0 1 30-3 12 12 0 0 1 2 25H15Z"
+                  fill="currentColor" stroke="currentColor" stroke-linejoin="round"/>
+        </symbol>
+
+        <symbol id="icon-cloud-rain" viewBox="0 0 64 64">
+            <path d="M15 39a11 11 0 0 1 0-22 16 16 0 0 1 30-3 12 12 0 0 1 2 25H15Z" fill="currentColor"/>
+            <g fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round">
+                <path d="m20 44-3 7M32 44l-3 7M44 44l-3 7"/>
+            </g>
+        </symbol>
+
+        <symbol id="icon-cloud-snow" viewBox="0 0 64 64">
+            <path d="M15 37a11 11 0 0 1 0-22 16 16 0 0 1 30-3 12 12 0 0 1 2 25H15Z" fill="currentColor"/>
+            <g fill="currentColor">
+                <circle cx="20" cy="46" r="2.5"/>
+                <circle cx="32" cy="50" r="2.5"/>
+                <circle cx="44" cy="46" r="2.5"/>
+            </g>
+        </symbol>
+
+        <symbol id="icon-cloud-storm" viewBox="0 0 64 64">
+            <path d="M15 37a11 11 0 0 1 0-22 16 16 0 0 1 30-3 12 12 0 0 1 2 25H15Z" fill="currentColor"/>
+            <path d="M33 35 24 48h8l-2 11 12-17h-8l4-7Z" fill="#e5c987"/>
+        </symbol>
+
+        <symbol id="icon-cloud-fog" viewBox="0 0 64 64">
+            <path d="M15 32a11 11 0 0 1 0-22 16 16 0 0 1 30-3 12 12 0 0 1 2 25H15Z" fill="currentColor"/>
+            <g stroke="currentColor" stroke-width="3.5" stroke-linecap="round">
+                <path d="M8 40h43M14 48h38M9 56h30"/>
+            </g>
+        </symbol>
+    </svg>
+
+
+    <div class="app-shell">
+
+        <!-- HEADER -->
+        <header class="site-header">
+
+            <a class="brand" href="./" aria-label="Atmos home">
+                <span class="brand-symbol">
+                    <svg viewBox="0 0 48 48" aria-hidden="true">
+                        <use href="#icon-atmos"></use>
+                    </svg>
+                </span>
+
+                <span class="brand-copy">
+                    <span class="brand-name">Atmos</span>
+                    <span class="brand-subtitle">Weather, at a glance</span>
+                </span>
+            </a>
+
+            <div class="header-controls">
+
+                <button
+                    type="button"
+                    class="icon-button"
+                    id="location-button"
+                    aria-label="Use my current location"
+                    title="Use my location"
+                >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <use href="#icon-location"></use>
+                    </svg>
+                </button>
+
+                <button
+                    type="button"
+                    class="icon-button"
+                    id="refresh-button"
+                    aria-label="Refresh weather"
+                    title="Refresh weather"
+                >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <use href="#icon-refresh"></use>
+                    </svg>
+                </button>
+
+                <button
+                    type="button"
+                    class="icon-button"
+                    id="settings-button"
+                    aria-label="Open settings"
+                    aria-expanded="false"
+                    aria-controls="settings-panel"
+                    title="Settings"
+                >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <use href="#icon-settings"></use>
+                    </svg>
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- SEARCH -->
+        <section class="search-area" aria-label="Find a location">
+
+            <form id="search-form" class="search-form" role="search">
+
+                <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <use href="#icon-search"></use>
+                </svg>
+
+                <label for="city-search" class="visually-hidden">
+                    Search by city or location
+                </label>
+
+                <input
+                    type="search"
+                    id="city-search"
+                    name="city"
+                    placeholder="Search a city or location"
+                    autocomplete="off"
+                    aria-autocomplete="list"
+                    aria-controls="search-results"
+                    aria-expanded="false"
+                    required
+                >
+
+                <button type="submit" id="search-button" class="search-submit">
+                    Search
+                </button>
+
+                <ul id="search-results" class="search-results" role="listbox" hidden></ul>
+
+            </form>
+
+            <p class="search-hint" id="search-hint">
+                Discover weather anywhere in the world.
+            </p>
+
+        </section>
+
+
+        <!-- SETTINGS -->
+        <section
+            class="settings-panel"
+            id="settings-panel"
+            aria-labelledby="settings-heading"
+            hidden
+        >
+
+            <div class="settings-heading-row">
+                <h2 id="settings-heading">Preferences</h2>
+
+                <button
+                    type="button"
+                    id="close-settings"
+                    class="icon-button"
+                    aria-label="Close settings"
+                >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <use href="#icon-close"></use>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="setting-row">
+                <div>
+                    <h3>Temperature</h3>
+                    <p>Choose your preferred unit.</p>
+                </div>
+
+                <div class="segmented-control" role="group" aria-label="Temperature unit">
+                    <button type="button" id="unit-celsius" aria-pressed="true">°C</button>
+                    <button type="button" id="unit-fahrenheit" aria-pressed="false">°F</button>
+                </div>
+            </div>
+
+            <div class="setting-row">
+                <div>
+                    <h3>Motion</h3>
+                    <p>Reduce scene movement and transitions.</p>
+                </div>
+
+                <label class="switch">
+                    <input type="checkbox" id="reduced-motion-toggle">
+                    <span class="switch-track" aria-hidden="true"></span>
+                    <span class="visually-hidden">Reduce animations</span>
+                </label>
+            </div>
+
+        </section>
+
+
+        <!-- SAVED LOCATIONS -->
+        <nav class="saved-locations" aria-label="Saved locations">
+
+            <div class="saved-heading">
+                <span class="eyebrow">YOUR PLACES</span>
+
+                <button
+                    type="button"
+                    id="manage-favorites"
+                    class="text-button"
+                    aria-expanded="false"
+                    aria-controls="favorites-list"
+                >
+                    Manage
+                </button>
+            </div>
+
+            <div id="favorites-list" class="favorites-list">
+                <button
+                    type="button"
+                    class="favorite-location is-active"
+                    data-location="Coimbatore"
+                    aria-current="true"
+                >
+                    Coimbatore
+                </button>
+            </div>
+
+        </nav>
+
+
+        <!-- MAIN WEATHER -->
+        <main id="main-content">
+
+            <!-- CURRENT CONDITIONS AND WEATHER SCENE -->
+            <section class="weather-hero" aria-labelledby="city-name">
+
+                <div class="weather-hero-top">
+
+                    <div class="current-overview">
+
+                        <div class="location-heading">
+                            <div>
+                                <p class="eyebrow">CURRENT WEATHER</p>
+
+                                <h1 id="city-name">Coimbatore</h1>
+
+                                <p id="country-name" class="country-name">
+                                    Loading location...
+                                </p>
+                            </div>
+
+                            <button
+                                type="button"
+                                id="favorite-toggle"
+                                class="icon-button favorite-toggle"
+                                aria-label="Save this location"
+                                aria-pressed="false"
+                                title="Save location"
+                            >
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <use href="#icon-star"></use>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <p class="local-date" id="local-date">
+                            Loading local time...
+                        </p>
+
+                        <div class="temperature-row">
+
+                            <span
+                                class="current-temperature"
+                                id="current-temperature"
+                            >--°</span>
+
+                            <svg
+                                class="current-weather-icon"
+                                id="current-weather-icon"
+                                viewBox="0 0 64 64"
+                                role="img"
+                                aria-label="Current weather condition"
+                            >
+                                <use href="#icon-cloud-sun"></use>
+                            </svg>
+
+                        </div>
+
+                        <h2 class="weather-description" id="weather-description">
+                            Loading current conditions
+                        </h2>
+
+                        <p class="feels-like">
+                            Feels like
+                            <span id="feels-like-value">--°</span>
+                        </p>
+
+                        <div class="high-low-row">
+                            <span>H: <strong id="high-temperature">--°</strong></span>
+                            <span>L: <strong id="low-temperature">--°</strong></span>
+                        </div>
+
+                    </div>
+
+                    <div class="hero-side-information">
+
+                        <div class="sun-times-card">
+                            <div class="sun-time">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <use href="#icon-sunrise"></use>
+                                </svg>
+                                <div>
+                                    <span class="small-label">Sunrise</span>
+                                    <strong id="sunrise-time">--:--</strong>
+                                </div>
+                            </div>
+
+                            <div class="sun-time">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <use href="#icon-sunset"></use>
+                                </svg>
+                                <div>
+                                    <span class="small-label">Sunset</span>
+                                    <strong id="sunset-time">--:--</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="last-updated">
+                            <span class="status-dot" aria-hidden="true"></span>
+                            <span id="last-updated">Waiting for weather data</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PHOTOGRAPHIC, WEATHER-REACTIVE SCENE -->
+                <div
+                    class="weather-scene weather-clear"
+                    id="weather-scene"
+                    data-weather="clear"
+                    aria-label="Weather landscape"
+                >
+
+                    <img
+                        class="weather-scene-image"
+                        id="weather-scene-image"
+                        src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&amp;fit=crop&amp;w=1800&amp;q=85"
+                        data-scene-clear="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&amp;fit=crop&amp;w=1800&amp;q=85"
+                        data-scene-cloudy="https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&amp;fit=crop&amp;w=1800&amp;q=85"
+                        data-scene-rain="https://images.unsplash.com/photo-1519692933481-e162a57d6721?auto=format&amp;fit=crop&amp;w=1800&amp;q=85"
+                        data-scene-storm="https://images.unsplash.com/photo-1605727216801-e27ce1d0cc28?auto=format&amp;fit=crop&amp;w=1800&amp;q=85"
+                        data-scene-snow="https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&amp;fit=crop&amp;w=1800&amp;q=85"
+                        data-scene-fog="https://images.unsplash.com/photo-1485236715568-ddc5ee6ca227?auto=format&amp;fit=crop&amp;w=1800&amp;q=85"
+                        data-scene-night="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&amp;fit=crop&amp;w=1800&amp;q=85"
+                        alt="A peaceful mountain lake beneath an open sky"
+                        fetchpriority="high"
+                    >
+
+                    <div class="scene-color-overlay" aria-hidden="true"></div>
+
+                    <div class="scene-sunlight" aria-hidden="true"></div>
+                    <div class="scene-stars" id="scene-stars" aria-hidden="true"></div>
+                    <div class="scene-cloud-layer" id="scene-cloud-layer" aria-hidden="true"></div>
+                    <div class="scene-weather-particles" id="scene-weather-particles" aria-hidden="true"></div>
+                    <div class="scene-mist" id="scene-mist" aria-hidden="true"></div>
+
+                    <!-- Small supporting mascot, not the website's theme -->
+                    <div class="weather-mascot" id="weather-mascot" aria-label="Small cat resting in the weather scene">
+
+                        <svg
+                            class="mascot-cat"
+                            viewBox="0 0 100 110"
+                            role="img"
+                            aria-label="Illustration of a sitting cat"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <defs>
+                                <linearGradient id="cat-fur" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#fffdf6"/>
+                                    <stop offset="100%" stop-color="#cbd5e1"/>
+                                </linearGradient>
+                            </defs>
+
+                            <ellipse cx="51" cy="101" rx="30" ry="6" fill="#101827" opacity=".25"/>
+
+                            <path
+                                d="M27 74 C14 79 10 93 19 99 C25 103 35 97 37 89"
+                                fill="none"
+                                stroke="url(#cat-fur)"
+                                stroke-width="11"
+                                stroke-linecap="round"
+                            />
+
+                            <path
+                                d="M28 52 L24 20 L43 34 Q51 30 59 34 L78 19 L75 53 Q85 65 78 83 Q73 97 52 96 L35 95 Q19 86 23 68Z"
+                                fill="url(#cat-fur)"
+                                stroke="#8e9aaa"
+                                stroke-width="1.4"
+                                stroke-linejoin="round"
+                            />
+
+                            <path
+                                d="M31 32 L28 25 L39 37Z M69 32 L73 25 L63 37Z"
+                                fill="#cda8b1"
+                            />
+
+                            <path
+                                d="M34 58 Q39 54 43 58 M60 58 Q65 54 69 58"
+                                fill="none"
+                                stroke="#465367"
+                                stroke-width="2.8"
+                                stroke-linecap="round"
+                            />
+
+                            <path
+                                d="M48 65 Q51 62 54 65 L51 68Z"
+                                fill="#c88e9b"
+                            />
+
+                            <path
+                                d="M51 68 Q49 73 44 71 M51 68 Q54 73 59 71"
+                                fill="none"
+                                stroke="#64748b"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                            />
+
+                            <path
+                                d="M30 67 L15 65 M30 72 L14 74 M72 67 L86 65 M72 72 L87 74"
+                                fill="none"
+                                stroke="#9aa6b5"
+                                stroke-width="1.2"
+                                stroke-linecap="round"
+                            />
+
+                            <path
+                                d="M36 82 Q51 89 66 82"
+                                fill="none"
+                                stroke="#b4bfcd"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+
+                    </div>
+
+                    <div class="scene-caption">
+                        <span class="scene-caption-dot" aria-hidden="true"></span>
+                        <span id="scene-caption">The sky around you, right now</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- WEATHER DETAILS -->
+            <section class="content-section" aria-labelledby="details-heading">
+
+                <div class="section-heading-row">
+                    <div>
+                        <p class="eyebrow">AT A GLANCE</p>
+                        <h2 id="details-heading">Weather details</h2>
+                    </div>
+                </div>
+
+                <div class="details-grid">
+
+                    <article class="detail-card">
+                        <div class="detail-card-heading">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <use href="#icon-humidity"></use>
+                            </svg>
+                            <h3>Humidity</h3>
+                        </div>
+                        <p class="detail-value"><span id="humidity-value">--</span><span class="detail-unit">%</span></p>
+                        <p class="detail-description" id="humidity-description">Relative humidity</p>
+                    </article>
+
+                    <article class="detail-card">
+                        <div class="detail-card-heading">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <use href="#icon-wind"></use>
+                            </svg>
+                            <h3>Wind</h3>
+                        </div>
+                        <p class="detail-value">
+                            <span id="wind-speed-value">--</span>
+                            <span class="detail-unit" id="wind-speed-unit">km/h</span>
+                        </p>
+                        <p class="detail-description" id="wind-direction-value">Direction unavailable</p>
+                    </article>
+
+                    <article class="detail-card">
+                        <div class="detail-card-heading">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <use href="#icon-eye"></use>
+                            </svg>
+                            <h3>Visibility</h3>
+                        </div>
+                        <p class="detail-value">
+                            <span id="visibility-value">--</span>
+                            <span class="detail-unit">km</span>
+                        </p>
+                        <p class="detail-description">Viewing distance</p>
+                    </article>
+
+                    <article class="detail-card">
+                        <div class="detail-card-heading">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <use href="#icon-gauge"></use>
+                            </svg>
+                            <h3>Pressure</h3>
+                        </div>
+                        <p class="detail-value">
+                            <span id="pressure-value">--</span>
+                            <span class="detail-unit">hPa</span>
+                        </p>
+                        <p class="detail-description">Atmospheric pressure</p>
+                    </article>
+
+                    <article class="detail-card">
+                        <div class="detail-card-heading">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <use href="#icon-sun"></use>
+                            </svg>
+                            <h3>UV index</h3>
+                        </div>
+                        <p class="detail-value"><span id="uv-index-value">--</span></p>
+                        <p class="detail-description" id="uv-description">Ultraviolet intensity</p>
+                    </article>
+
+                    <article class="detail-card">
+                        <div class="detail-card-heading">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <use href="#icon-thermometer"></use>
+                            </svg>
+                            <h3>Feels like</h3>
+                        </div>
+                        <p class="detail-value"><span id="detail-feels-like">--°</span></p>
+                        <p class="detail-description">Perceived temperature</p>
+                    </article>
+
+                </div>
+
+            </section>
+
+
+            <!-- HOURLY FORECAST -->
+            <section class="content-section forecast-section" aria-labelledby="hourly-heading">
+
+                <div class="section-heading-row">
+                    <div>
+                        <p class="eyebrow">THE DAY AHEAD</p>
+                        <h2 id="hourly-heading">Hourly forecast</h2>
+                        <p class="section-description">Conditions through the next 24 hours.</p>
+                    </div>
+                </div>
+
+                <div
+                    class="hourly-forecast"
+                    id="hourly-forecast"
+                    aria-label="Hourly weather forecast"
+                    aria-live="polite"
+                >
+                    <p class="forecast-placeholder">Hourly forecast will appear here.</p>
+                </div>
+
+            </section>
+
+
+            <!-- SEVEN-DAY FORECAST -->
+            <section class="content-section forecast-section" aria-labelledby="daily-heading">
+
+                <div class="section-heading-row">
+                    <div>
+                        <p class="eyebrow">PLAN AHEAD</p>
+                        <h2 id="daily-heading">Next 7 days</h2>
+                        <p class="section-description">A look at the week ahead.</p>
+                    </div>
+                </div>
+
+                <div
+                    class="daily-forecast"
+                    id="daily-forecast"
+                    aria-label="Seven-day weather forecast"
+                    aria-live="polite"
+                >
+                    <p class="forecast-placeholder">The weekly forecast will appear here.</p>
+                </div>
+
+            </section>
+
+
+            <!-- PRECIPITATION AND AIR QUALITY -->
+            <section class="additional-grid" aria-label="Additional weather information">
+
+                <article class="information-card precipitation-card">
+                    <div class="information-card-heading">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <use href="#icon-cloud-rain"></use>
+                        </svg>
+                        <div>
+                            <p class="eyebrow">PRECIPITATION</p>
+                            <h2>Chance of rain</h2>
+                        </div>
+                    </div>
+
+                    <p class="information-value">
+                        <span id="rain-chance-value">--</span><span>%</span>
+                    </p>
+
+                    <p class="information-description" id="rain-description">
+                        Probability of precipitation
+                    </p>
+
+                    <div
+                        class="probability-track"
+                        role="progressbar"
+                        id="rain-probability-track"
+                        aria-label="Chance of rain"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        aria-valuenow="0"
+                    >
+                        <span id="rain-probability-fill"></span>
+                    </div>
+                </article>
+
+                <article class="information-card air-quality-card" id="air-quality-section">
+                    <div class="information-card-heading">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <use href="#icon-wind"></use>
+                        </svg>
+                        <div>
+                            <p class="eyebrow">AIR QUALITY</p>
+                            <h2>Air quality index</h2>
+                        </div>
+                    </div>
+
+                    <p class="information-value">
+                        <span id="air-quality-value">--</span>
+                    </p>
+
+                    <p class="information-description" id="air-quality-description">
+                        Air quality data unavailable
+                    </p>
+                </article>
+
+            </section>
+
+
+            <!-- LOADING, ERRORS AND STATUS -->
+            <section class="status-area" aria-live="polite">
+
+                <div class="loading-panel" id="loading-message" hidden>
+                    <span class="loading-spinner" aria-hidden="true"></span>
+                    <p>Gathering the latest weather for you...</p>
+                </div>
+
+                <div class="error-panel" id="error-message" role="alert" hidden>
+                    <div>
+                        <h2>Weather unavailable</h2>
+                        <p id="error-description">
+                            We couldn't retrieve the weather right now.
+                        </p>
+                    </div>
+
+                    <button type="button" id="retry-button" class="secondary-button">
+                        Try again
+                    </button>
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <div class="footer-brand">
+                <span class="footer-brand-name">Atmos</span>
+                <span class="footer-tagline">A clearer view of your world.</span>
+            </div>
+
+            <p class="footer-source">
+                Weather forecasts provided by Open-Meteo.
+            </p>
+
+            <p class="footer-disclaimer">
+                Forecasts may change as conditions evolve.
+            </p>
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
+
